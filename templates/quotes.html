@@ -1,0 +1,15 @@
+{% if RANDOMQUOTES %}
+{# Need to transfer random quotes from pelican variable #}
+<script>
+quotes = [
+{% for quote in RANDOMQUOTES %}
+"{{ quote|safe }}",
+{% endfor %}
+]
+
+index = Math.floor(Math.random() * quotes.length);
+document.writeln("<div id='quote'>")
+document.writeln("    " + quotes[index])
+document.writeln("</div>")
+</script>
+{% endif %}

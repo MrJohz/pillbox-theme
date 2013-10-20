@@ -1,0 +1,441 @@
+/* Variables */
+
+// light
+@main-color: #ACD6EE;
+@main-dark: #33A5FF;
+@second-color: #ACD6EE;
+@third-color: #BDE7FF;
+@complement-color: #C7D7D7;
+@complement-color2: #D8E8E8;
+@bg-color: #E6EEFF;
+@text-color: #333333;
+@text-color2: #333333;
+
+// dark
+/*
+@main-color: #3F8FD2;
+@main-dark: #514EDC;
+@second-color: #6EB1E9;
+@third-color: #8FC0E9;
+@complement-color: #FFD03F;
+@complement-color2: #FFAE3F;
+@bg-color: #333333;
+@text-color: @bg-color;
+@text-color2: @second-color;
+*/
+// light2
+/*
+@main-color: #7EEBFF;
+@main-dark: #2992A6;
+@second-color: #FFD67A;
+@third-color: #BFA875;
+@complement-color: #FF877A;
+@complement-color2: #A63428;
+@bg-color: #FFE8B4;
+@text-color: #333333;
+@text-color2: @text-color;
+*/
+
+/* Mixins */
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
+.rounded-bottom (@radius: 5px) {
+    border-bottom-left-radius: @radius;
+    border-bottom-right-radius: @radius;
+
+    -moz-border-radius-bottomright: @radius;
+    -moz-border-radius-bottomleft: @radius;
+
+    -webkit-border-bottom-right-radius: @radius;
+    -webkit-border-bottom-left-radius: @radius;
+}
+
+.rounded-top (@radius: 5px) {
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
+
+    -moz-border-radius-topright: @radius;
+    -moz-border-radius-topleft: @radius;
+
+    -webkit-border-top-right-radius: @radius;
+    -webkit-border-top-left-radius: @radius;
+}
+
+.center (@width: 50%) {
+    width: @width;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bubble (@color1: @complement-color; @color2: @text-color) {
+    .center(40%);
+    .rounded-corners(50px);
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 25px 35px 25px 35px;
+    text-align: center;
+    color: @color2;
+    background-color: @color1;
+
+
+    a {
+        color: @color2;
+        text-decoration: none;
+        font-weight: bolder;
+    }
+
+    a:visited {
+        color: @color2;
+        text-decoration: none;
+        font-weight: bolder;
+    }
+
+    a:hover {
+        .rounded-corners(5px);
+        background-color: @color2;
+        color: @color1;
+    }
+}
+
+// Overall styles
+body {
+    font-family: 'Karla', sans-serif;
+    width: 100%;
+    background: @bg-color;
+    border: 0;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+    color: @text-color; // All text should be on top of something brighter
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: left;
+    margin-left: 7em;
+}
+
+p {
+    margin-left: 0%;
+    margin-right: 0%;
+    padding: 0px;
+    padding-top: 5px;
+    text-align: justify;
+    display: block;
+}
+
+blockquote {
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 45px;
+    padding-left: 15px;
+    border-left: 20px solid @text-color;
+
+    p {
+        margin-left: 0px;
+        padding-left: 0px;
+        display: block;
+    }
+}
+
+ol, ul {
+    text-align: left;
+    list-style-position: inside;
+    margin-left: 45px;
+    padding-left: 15px;
+}
+
+ul {
+    list-style-type: disc;
+}
+
+a {
+    color: @text-color;
+    font-weight: bolder;
+    text-decoration: none;
+}
+a:visited {
+    color: @text-color;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+a:hover {
+    .rounded-corners(5px);
+    background-color: @text-color;
+    color: @second-color;
+}
+
+.highlighttable { // See also theme/css/pygm-*.css
+    .rounded-corners(5px);
+    .center(80%);
+    padding: 5px;
+    margin: 0% 10%;
+    background-color: @bg-color;
+    text-align: left;
+
+    tr {
+        border-collapse: collapse;
+    }
+
+    .linenos {
+        color: #F8F8F2; // from pygments
+        margin: 0px;
+        padding: 0px;
+        border-right: 1px solid #F8F8F2; // from pygments
+        text-align: center;
+    }
+
+    .code {
+        margin: 0px;
+        padding: 0px;
+
+        .highlight {
+            padding: 0px;
+            margin: 0px;
+            margin-left: 7px;
+        }
+    }
+}
+
+.highlight {
+    .rounded-corners(5px);
+    .center(75%);
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0% 10%;
+    background-color: @bg-color;
+    text-align: left;
+}
+
+// Individual elements
+
+#header {
+    .rounded-bottom(40px);
+    .center(60%);
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 25px;
+    font-family: 'Changa One', cursive;
+    font-size: 7.5em;
+    letter-spacing: 2px;
+    background-color: @main-color;
+    text-align: center;
+
+    a {
+        color: @text-color;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: @text-color;
+        background-color: @main-color
+    }
+
+    strong {
+        color: @text-color;
+        margin-right: 40px;
+        margin-left: 40px;
+        display: block;
+        font-size: 0.18em;
+    }
+}
+
+#quote {
+    .bubble;
+}
+
+#menu {
+    .bubble;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: inline;
+        text-align: center;
+    }
+}
+
+#page-title {
+    .bubble(@third-color, @text-color);
+    width: 50%
+}
+.xkcd-compliance {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+.xkcd-spacer {
+    float: left;
+    width: 10%;
+    height: 10px;
+}
+
+#content {
+    .center(60%);
+    .rounded-corners(40px);
+    background-color: @second-color;
+    padding: 25px 0px 25px 0px;
+
+    a {
+        color: @text-color;
+        font-weight: bolder;
+        text-decoration: none;
+    }
+    a:visited {
+        color: @text-color;
+        font-weight: bolder;
+        text-decoration: none;
+    }
+
+    a:hover {
+        .rounded-corners(5px);
+        background-color: @text-color;
+        color: @second-color;
+    }
+
+    ul#post-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        hr.article-divider {
+            .rounded-corners(4px);
+            margin-top: 4em;
+            margin-bottom: 2em;
+            border: 0;
+            width: 90%;
+            color: @text-color;
+            background-color: @text-color;
+            height: 8px;
+        }
+        hr.article-divider:last-of-type {
+            display: none;
+        }
+    }
+
+    .post-info {
+        .center(40%);
+        .rounded-corners(20px);
+        background-color: @bg-color;
+        color: @text-color2;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: center;
+
+        a {
+            color: @text-color2;
+        }
+
+        a:visited {
+            color: @text-color2;
+        }
+
+        a:hover {
+            background-color: @text-color2;
+            color: @text-color;
+        }
+    }
+
+    h2.entry-title {
+        font-size: 1.9em;
+        text-align: center;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    div.entry-content {
+        float: left;
+        width: 80%;
+        margin-bottom: 15px;
+        .footnote {
+            margin: 0;
+            hr {
+                .rounded-corners(2px);
+                margin-right: auto;
+                margin-left: 9%;
+                border: 0;
+                width: 50%;
+                color: @text-color;
+                background-color: @text-color;
+                height: 4px;
+            }
+
+            ol {
+                padding: 0;
+                margin: 0;
+                margin-left: 5%;
+                margin-right: 5%;
+                list-style-position: inside;
+            }
+        }
+    }
+
+    .paginator {
+        .post-info;
+        background-color: @second-color;
+        color: @text-color;
+        a {
+            font-size: 1.2em;
+        }
+    }
+}
+
+#nav-links {
+    .rounded-corners(40px);
+    display: inline-block;
+    padding: 15px;
+    background-color: @third-color;
+    letter-spacing: 5px;
+    text-align: center;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline;
+
+        li {
+            display: inline;
+        }
+    }
+
+    a {
+        display: inline-block;
+        text-decoration: none;
+        color: @text-color;
+    }
+}
+
+#contentinfo {
+    .rounded-top(30px);
+    .center(60%);
+    margin-top: 20px;
+    padding: 25px 0px;
+    display: block;
+    background-color: @main-color;
+    text-align: center;
+
+    a:hover {
+        color: @main-color;
+    }
+
+    #theme-switcher {
+        margin: 15px;
+    }
+
+    #theme-switcher-select {
+        .rounded-corners(5px);
+        margin: 5px;
+        border: 1px solid @text-color;
+        color: @text-color;
+        font-size: 1.3em;
+        font-family: 'Karla', sans-serif;
+        background-color: @main-color;
+    }
+}

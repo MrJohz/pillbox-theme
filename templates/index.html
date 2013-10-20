@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Random quote of the pageload -->
+{% include 'quotes.html' %}
+<section id="content">
+{% block content_title %}
+{% endblock %}
+<ul id="post-list">
+{% for article in articles_page.object_list %}
+        <li><article class="hentry">
+            <header> <h2 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2> </header>
+            <footer class="post-info">
+                <abbr class="published" title="{{ article.date.isoformat() }}"> {{ article.locale_date }} </abbr>
+                {% if article.author %}<address class="vcard author">By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a></address>{% endif %}
+            </footer><!-- /.post-info -->
+            <div class="xkcd-compliance">
+                <div class="xkcd-spacer"></div>
+                <div class="entry-content"> {{ article.content }} </div><!-- /.entry-content -->
+                <div class="xkcd-spacer"></div>
+            </div>
+        </article></li>
+        <hr class="article-divider" />
+{% endfor %}
+</ul><!-- /#posts-list -->
+{% include 'pagination.html' %}
+</section><!-- /#content -->
+{% endblock content %}

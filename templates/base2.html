@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+
+        <!-- TEMPORARY: Less stylesheet & less.js -->
+        <link rel="stylesheet/less" type="text/css" href="static/less/main.less" />
+        <script src="static/js/less.js" type="text/javascript"></script>
+        <script>
+            less.watch()
+        </script>
+
+        <!-- Obvs need to include font-awesome for teh pretties -->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+        <title>{% block title %}{{sitename}}{% endblock %}</title>
+    </head>
+
+    <body>
+        <header>
+            <h1 id="header"><a href="/">JOHZ</a></h1>
+
+            <!-- We'll remove this for the moment.
+
+            <script src="static/js/quotes.js"></script>
+
+            <span id="nav-links">
+                <ul>
+                    <li><a href="https://github.com/MrJohz"><i class="icon-github icon-2x"></i></a></li>
+                    <li><a href="/"><i class="icon-home icon-2x"></i></a></li>
+                    <li><a href="https://twitter.com/"><i class="icon-twitter icon-2x"></i></a></li>
+                </ul>
+            </span>
+            -->
+        </header>
+    </body>
+
+</html>

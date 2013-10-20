@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+        {% block head %}
+        <script type="text/javascript">
+        // Test for localStorage
+        try {
+            localStorage.setItem('test', 'test');
+            localStorage.removeItem('test');
+            window.LS_EXISTS = true; // no need to repeat the test
+
+            // localStorage exists, use it.
+            var stylesheet = localStorage.getItem('pillbox-theme') || "dark";
+            if (!(stylesheet == "dark") && !(stylesheet == "lite")) {
+                stylesheet = "dark";
+            }
+            window.PILLBOX_STYLESHEET = stylesheet;
+            document.write('<link id="main-theme" href="{{SITEURL}}/theme/css/main-' + stylesheet + '.css" rel="stylesheet" />');
+
+        } catch(e) {
+            window.LS_EXISTS = false; // no need to repeat the test
+
+            // localStorage doesn't exist, give up and go home.
+            document.write('<link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" />');
+        }
+        </script>
+        <noscript>
+            <link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" /> 
+        </noscript>
+
+        <meta name="google-site-verification" content="mTo99p64i0Cz3UP_PzBDfXDqcDB9IfIDDzEBF3dDIJM" />
+
+        <!-- Add title -->
+        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+
+        <!-- Crazy feed mumbo-jumbo, kept the same from !simple/base.html -->
+        {% if FEED_ALL_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
+        {% endif %}
+        {% if FEED_ALL_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Full RSS Feed" />
+        {% endif %}
+        {% if FEED_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+        {% endif %}
+        {% if FEED_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+        {% endif %}
+        {% if CATEGORY_FEED_ATOM and category %}
+        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_ATOM|format(category.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Categories Atom Feed" />
+        {% endif %}
+        {% if CATEGORY_FEED_RSS and category %}
+        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS|format(category.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Categories RSS Feed" />
+        {% endif %}
+        {% if TAG_FEED_ATOM and tag %}
+        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_ATOM|format(tag.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Tags Atom Feed" />
+        {% endif %}
+        {% if TAG_FEED_RSS and tag %}
+        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
+        {% endif %}
+        {% endblock head %}
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1 id="header"><a href="{{SITEURL}}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
+        </header><!-- /#banner -->
+
+        <!-- Just copied straight from !simple/base.html again -->
+        <nav id="menu"><ul>
+        {% for title, link in MENUITEMS %}
+            <li><a href="{{ link }}">{{ title }}</a></li>
+        {% endfor %}
+        {% if DISPLAY_PAGES_ON_MENU %}
+          {% for p in PAGES %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+          {% endfor %}
+        {% else %}
+          {% if DISPLAY_CATEGORIES_ON_MENU %}
+            {% for cat, null in categories %}
+              <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+        </ul></nav><!-- /#menu -->
+
+        <!-- Now begineth the content -->
+        {% block content %}
+        {% endblock %}
+        <!-- Now endeth the content -->
+
+
+        <footer id="contentinfo" class="body">
+
+            <script>
+            if (window.LS_EXISTS) {
+                document.write('<div id="theme-switcher">');
+                document.write('Change Theme<br />');
+                document.write('<select id="theme-switcher-select">');
+                if (window.PILLBOX_STYLESHEET == "dark") {
+                    document.write('<option value="dark" selected>Dark</option>');
+                    document.write('<option value="lite">Light</option>');
+                } else if (window.PILLBOX_STYLESHEET == "lite") {
+                    document.write('<option value="dark">Dark</option>');
+                    document.write('<option value="lite" selected>Light</option>');
+                } else {
+                    document.write('<option value="dark">Dark</option>');
+                    document.write('<option value="lite">Light</option>');
+                }
+                document.write('</select>');
+                document.write('</div>');
+            }
+            </script>
+
+            <address id="about" class="vcard body">
+            This blog is built from <a href="http://getpelican.com/">Pelican</a>,
+            <a href="http://python.org">Python</a>,
+            and the Pillbox Theme.
+            </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+
+        <!-- And finally insert out scripts. -->
+        <script type="text/javascript">
+        (function(){var e;e=document.getElementById("theme-switcher-select");e.onchange=function(){var e,t,n,r;n=this.options[this.selectedIndex].value;e=document.getElementById("main-theme");r=e.href.split("/");r[r.length-1]="main-"+n+".css";e.href=r.join("/");return localStorage.setItem("pillbox-theme",n)}}).call(this)
+        </script>
+    </body>
+</html>
