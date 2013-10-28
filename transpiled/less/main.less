@@ -1,6 +1,7 @@
 /* Variables */
 
 // light
+/*
 @main-color: #ACD6EE;
 @main-dark: #33A5FF;
 @second-color: #ACD6EE;
@@ -10,31 +11,24 @@
 @bg-color: #E6EEFF;
 @text-color: #333333;
 @text-color2: #333333;
+*/
 
 // dark
 /*
 @main-color: #3F8FD2;
 @main-dark: #514EDC;
-@second-color: #6EB1E9;
-@third-color: #8FC0E9;
+@second-color: #AFC4F9;
+@third-color: #BDD7DF;
 @complement-color: #FFD03F;
 @complement-color2: #FFAE3F;
 @bg-color: #333333;
 @text-color: @bg-color;
 @text-color2: @second-color;
 */
-// light2
+
+// halloween
 /*
-@main-color: #7EEBFF;
-@main-dark: #2992A6;
-@second-color: #FFD67A;
-@third-color: #BFA875;
-@complement-color: #FF877A;
-@complement-color2: #A63428;
-@bg-color: #FFE8B4;
-@text-color: #333333;
-@text-color2: @text-color;
-*/
+@main-color:
 
 /* Mixins */
 .rounded-corners (@radius: 5px) {
@@ -84,12 +78,6 @@
 
 
     a {
-        color: @color2;
-        text-decoration: none;
-        font-weight: bolder;
-    }
-
-    a:visited {
         color: @color2;
         text-decoration: none;
         font-weight: bolder;
@@ -218,7 +206,7 @@ a:hover {
 
 #header {
     .rounded-bottom(40px);
-    .center(60%);
+    .center(70%);
     display: block;
     padding-top: 20px;
     padding-bottom: 25px;
@@ -273,22 +261,17 @@ a:hover {
 }
 .xkcd-spacer {
     float: left;
-    width: 10%;
+    width: 5%;
     height: 10px;
 }
 
 #content {
-    .center(60%);
+    .center(70%);
     .rounded-corners(40px);
     background-color: @second-color;
     padding: 25px 0px 25px 0px;
 
     a {
-        color: @text-color;
-        font-weight: bolder;
-        text-decoration: none;
-    }
-    a:visited {
         color: @text-color;
         font-weight: bolder;
         text-decoration: none;
@@ -332,10 +315,6 @@ a:hover {
             color: @text-color2;
         }
 
-        a:visited {
-            color: @text-color2;
-        }
-
         a:hover {
             background-color: @text-color2;
             color: @text-color;
@@ -351,7 +330,7 @@ a:hover {
 
     div.entry-content {
         float: left;
-        width: 80%;
+        width: 90%;
         margin-bottom: 15px;
         .footnote {
             margin: 0;
@@ -378,12 +357,26 @@ a:hover {
 
     .paginator {
         .post-info;
+        width: 70%;
         background-color: @second-color;
         color: @text-color;
         a {
             font-size: 1.2em;
         }
+        a:hover {
+            background-color: @text-color;
+            color: @second-color;
+        }
     }
+}
+
+#disqus-comments-container {
+    .rounded-corners(40px);
+    padding: 35px;
+    background-color: @third-color;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 25px;
 }
 
 #nav-links {
@@ -414,8 +407,8 @@ a:hover {
 
 #contentinfo {
     .rounded-top(30px);
-    .center(60%);
-    margin-top: 20px;
+    .center(70%);
+    margin-top: 25px;
     padding: 25px 0px;
     display: block;
     background-color: @main-color;

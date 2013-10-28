@@ -28,8 +28,6 @@
             <link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" /> 
         </noscript>
 
-        <meta name="google-site-verification" content="mTo99p64i0Cz3UP_PzBDfXDqcDB9IfIDDzEBF3dDIJM" />
-
         <!-- Add title -->
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
 
@@ -123,5 +121,9 @@
         <script type="text/javascript">
         (function(){var e;e=document.getElementById("theme-switcher-select");e.onchange=function(){var e,t,n,r;n=this.options[this.selectedIndex].value;e=document.getElementById("main-theme");r=e.href.split("/");r[r.length-1]="main-"+n+".css";e.href=r.join("/");return localStorage.setItem("pillbox-theme",n)}}).call(this)
         </script>
+        {% include 'disqus_comment_counts.html' %}
+        {% if PIWIKSCRIPT %}
+            {{ PIWIKSCRIPT }}
+        {% endif %}
     </body>
 </html>

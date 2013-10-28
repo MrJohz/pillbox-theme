@@ -15,27 +15,50 @@
 
 {% endblock %}
 
+
+
 {% block content %}
+{% import 'translations.html' as translations with context %}
+{{ translations.translations_for(article) }}
 <section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
-         title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
- {% import 'translations.html' as translations with context %}
- {{ translations.translations_for(article) }}
-  </header>
-  <footer class="post-info">
-    <abbr class="published" title="{{ article.date.isoformat() }}">
-      {{ article.locale_date }}
-    </abbr>
-    {% if article.author %}
-    <address class="vcard author">
-      By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a>
-    </address>
+  <ul id="post-list">
+    <li><article class="hentry">
+      <header><h2 class="entry-title">
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">
+          {{ article.title }}
+        </a>
+      </h2></header>
+      <footer class="post-info">
+        <abbr class="published" title="{{ article.date.isoformat() }}">
+          {{ article.locale_date }}
+        </abbr>
+        {% if article.author %}
+        <address class="vcard author">
+          By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a>
+        </address>
+        {% endif %}
+      </footer>
+      <div class="xkcd-compliance">
+        <div class="xkcd-spacer"></div>
+        <div class="entry-content">{{ article.content }}</div>
+        <div class="xkcd-spacer"></div>
+      </div>
+    </article></li>
+    <hr class="article-divider" />
+  </ul>
+  <p class="paginator">
+    {% if articles.index(article) != 0 %}
+      <a href="{{ SITEURL }}/{{ articles[articles.index(article) - 1].url }}">&laquo;</a>
+    {% else %}
+      &laquo;
     {% endif %}
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
-    {{ article.content }}
-  </div><!-- /.entry-content -->
+    {{ article.title }}
+    {% if articles.index(article) + 1 != articles|length %}
+      <a href="{{ SITEURL }}/{{ articles[articles.index(article) + 1].url }}">&raquo;</a> 
+    {% else %}
+      &raquo;
+    {% endif %}
+  </p>
 </section>
+<div id="disqus-comments-container">{% include 'disqus_comments.html' %}</div>
 {% endblock %}

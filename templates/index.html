@@ -13,6 +13,7 @@
             <footer class="post-info">
                 <abbr class="published" title="{{ article.date.isoformat() }}"> {{ article.locale_date }} </abbr>
                 {% if article.author %}<address class="vcard author">By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a></address>{% endif %}
+                <a href="{{ SITEURL }}/{{ article.url }}#disqus_thread">Comments</a>
             </footer><!-- /.post-info -->
             <div class="xkcd-compliance">
                 <div class="xkcd-spacer"></div>

@@ -1,37 +1,23 @@
 {% extends "base.html" %}
 {% block title %}{{ page.title }}{%endblock%}
 {% block content %}
-    {% import 'translations.html' as translations with context %}
-    {{ translations.translations_for(page) }}
-    <section id="content">
+{% import 'translations.html' as translations with context %}
+{{ translations.translations_for(page) }}
+<section id="content">
 
     <ul id="post-list">
-                <li><article class="hentry">
-                    <header> <h2 class="entry-title">{{ page.title }}</h2> </header>
-                    <div class="xkcd-compliance">
-                        <div class="xkcd-spacer"></div>
-                        <div class="entry-content"> {{ page.content }} </div><!-- /.entry-content -->
-                        <div class="xkcd-spacer"></div>
-                    </div>
-                </article></li>
-                <hr class="article-divider" />
-</ul><!-- /#posts-list -->
-    <!--
-        <ul id="post-list">
         <li><article class="hentry">
-        <h1 id="page-title" class="entry-title">{{ page.title }}</h1>
-        <div class="xkcd-compliance">
-            <div class="xkcd-spacer"></div>
-            <div class="entry-content">
-                {{ page.content }}
+            <header><h2 class="entry-title">{{ page.title }}</h2> </header>
+            <div class="xkcd-compliance">
+                <div class="xkcd-spacer"></div>
+                <div class="entry-content"> {{ page.content }} </div><!-- /.entry-content -->
+                <div class="xkcd-spacer"></div>
             </div>
-            <div class="xkcd-spacer"></div>
-        </div>
         </article></li>
-        </ul>
-    -->
-<p class="paginator">
-    {{ page.title }}
-</p>
-    </section>
+        <hr class="article-divider" />
+    </ul>
+    <p class="paginator">
+        {{ page.title }}
+    </p>
+</section>
 {% endblock %}
