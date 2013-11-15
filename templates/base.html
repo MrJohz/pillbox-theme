@@ -1,62 +1,155 @@
 <!DOCTYPE html>
 <html lang="{{ DEFAULT_LANG }}">
 <head>
-        {% block head %}
-        <script type="text/javascript">
-        // Test for localStorage
-        try {
-            localStorage.setItem('test', 'test');
-            localStorage.removeItem('test');
-            window.LS_EXISTS = true; // no need to repeat the test
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    {% block head %}
+    <script type="text/javascript">
+        window.themeSwitcher = new (function(themes, defaultTheme) {
+  indexOf = function(e,t,n){if(Array.prototype.indexOf){return Array.prototype.indexOf.apply(e,Array.prototype.slice.call(arguments,1))}var r,i=n?n:0,s;s=e.length;if(s===0||i>=s){return-1}if(i<0){i=s-Math.abs(i)}for(r=i;r<s;r++){if(e[r]==t){return r}}return-1}
 
-            // localStorage exists, use it.
-            var stylesheet = localStorage.getItem('pillbox-theme') || "dark";
-            if (!(stylesheet == "dark") && !(stylesheet == "lite")) {
-                stylesheet = "dark";
-            }
-            window.PILLBOX_STYLESHEET = stylesheet;
-            document.write('<link id="main-theme" href="{{SITEURL}}/theme/css/main-' + stylesheet + '.css" rel="stylesheet" />');
+  this.lsExists = false;
 
-        } catch(e) {
-            window.LS_EXISTS = false; // no need to repeat the test
+  this.themes = themes;
+  this.defaultTheme = indexOf(themes, defaultTheme);
+  this.currentTheme = this.defaultTheme;
 
-            // localStorage doesn't exist, give up and go home.
-            document.write('<link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" />');
-        }
-        </script>
-        <noscript>
-            <link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" /> 
-        </noscript>
+  try {
+    localStorage.setItem('test', 'test');
+    localStorage.removeItem('test');
+    this.lsExists = true;
 
-        <!-- Add title -->
-        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+    stylesheet = localStorage.getItem('pillbox-theme');
+    this.currentTheme = indexOf(themes, stylesheet);
 
-        <!-- Crazy feed mumbo-jumbo, kept the same from !simple/base.html -->
-        {% if FEED_ALL_ATOM %}
-        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
-        {% endif %}
-        {% if FEED_ALL_RSS %}
-        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Full RSS Feed" />
-        {% endif %}
-        {% if FEED_ATOM %}
-        <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
-        {% endif %}
-        {% if FEED_RSS %}
-        <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
-        {% endif %}
-        {% if CATEGORY_FEED_ATOM and category %}
-        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_ATOM|format(category.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Categories Atom Feed" />
-        {% endif %}
-        {% if CATEGORY_FEED_RSS and category %}
-        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS|format(category.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Categories RSS Feed" />
-        {% endif %}
-        {% if TAG_FEED_ATOM and tag %}
-        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_ATOM|format(tag.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Tags Atom Feed" />
-        {% endif %}
-        {% if TAG_FEED_RSS and tag %}
-        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
-        {% endif %}
-        {% endblock head %}
+    if (this.currentTheme < 0) {
+      this.currentTheme = this.defaultTheme;
+    }
+
+    this._setStyle = function(index) {
+      if (index >= 0 && index < this.themes.length) {
+        var styleName = this.themes[index];
+      } else {
+        var styleName = this.themes[this.currentTheme];
+        index = this.currentTheme;
+      }
+
+      var link = document.getElementById('main-theme');
+      var splits = link.href.split('/');
+      splits[splits.length - 1] = styleName + '.min.css';
+      link.href = splits.join('/')
+      console.log(link.href)
+
+      localStorage.setItem('pillbox-theme', styleName);
+      this.currentTheme = index;
+    }
+
+  } catch(e) {
+    this.lsExists = false;
+
+    this._setStyle = function(index) {
+      var styleName = this.themes[this.currentTheme];
+      var link = document.getElementById('main-theme');
+      var splits = link.href.split('/');
+      splits[splits.length - 1] = styleName + '.css';
+      link.href = splits.join('/');
+    }
+  }
+
+  this.writeStyle = function() {
+    var styleName = this.themes[this.currentTheme];
+    document.write('<link id="main-theme" href="{{SITEURL}}/theme/css/');
+    document.write(styleName + '.css" rel="stylesheet" />');
+  }
+
+  this.getStyle = function(stylesheet) {
+    if (stylesheet === null || typeof stylesheet == "undefined") {
+      return this.currentTheme;
+    } else if (typeof stylesheet === "number"
+                 &&   stylesheet === Math.floor(stylesheet)) {
+      if (stylesheet >= 0 && stylesheet < this.themes.length) {
+        return stylesheet;
+      } else {
+        return this.currentTheme;
+      }
+    } else {
+      var index = indexOf(this.themes, stylesheet);
+      if (index > -1) {
+        return index;
+      } else {
+        return this.currentTheme;
+      }
+    }
+  }
+
+  this.setStyle = function(stylesheet) {
+    var index = this.getStyle(stylesheet);
+    if (index === this.currentTheme) {
+      index = (this.currentTheme + 1) % this.themes.length;
+    }
+    this._setStyle(index);
+  }
+
+  this.addSwitcher = function(elementID) {
+    elem = document.getElementById(elementID);
+    switcher = document.createElement('select');
+    switcher.id = "theme-switcher-select";
+    for (var i = 0; i < this.themes.length; i++) {
+      var theme = this.themes[i];
+      var option = document.createElement('option');
+      option.value = theme;
+      option.appendChild(document.createTextNode(theme));
+      if (i == this.currentTheme) {
+        option.selected = true;
+      }
+      switcher.appendChild(option);
+    };
+    switcher.onchange = function(){
+      var e = this.options[this.selectedIndex].value;
+      themeSwitcher.setStyle(e);
+    };
+    elem.appendChild(switcher);
+  }
+
+})(['light', 'dark'], 'dark');
+
+        themeSwitcher.writeStyle();
+    </script>
+    <noscript>
+        <link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" /> 
+    </noscript>
+
+    <!-- FontAwesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Add title -->
+    <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+
+    <!-- Crazy feed mumbo-jumbo, kept the same from !simple/base.html -->
+    {% if FEED_ALL_ATOM %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
+    {% endif %}
+    {% if FEED_ALL_RSS %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Full RSS Feed" />
+    {% endif %}
+    {% if FEED_ATOM %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+    {% endif %}
+    {% if FEED_RSS %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+    {% endif %}
+    {% if CATEGORY_FEED_ATOM and category %}
+    <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_ATOM|format(category.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Categories Atom Feed" />
+    {% endif %}
+    {% if CATEGORY_FEED_RSS and category %}
+    <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS|format(category.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Categories RSS Feed" />
+    {% endif %}
+    {% if TAG_FEED_ATOM and tag %}
+    <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_ATOM|format(tag.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Tags Atom Feed" />
+    {% endif %}
+    {% if TAG_FEED_RSS and tag %}
+    <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
+    {% endif %}
+    {% endblock head %}
 </head>
 
 <body id="index" class="home">
@@ -90,24 +183,12 @@
 
         <footer id="contentinfo" class="body">
 
+            <div id="theme-switcher">
+            Change Theme<br />
+            </div>
+
             <script>
-            if (window.LS_EXISTS) {
-                document.write('<div id="theme-switcher">');
-                document.write('Change Theme<br />');
-                document.write('<select id="theme-switcher-select">');
-                if (window.PILLBOX_STYLESHEET == "dark") {
-                    document.write('<option value="dark" selected>Dark</option>');
-                    document.write('<option value="lite">Light</option>');
-                } else if (window.PILLBOX_STYLESHEET == "lite") {
-                    document.write('<option value="dark">Dark</option>');
-                    document.write('<option value="lite" selected>Light</option>');
-                } else {
-                    document.write('<option value="dark">Dark</option>');
-                    document.write('<option value="lite">Light</option>');
-                }
-                document.write('</select>');
-                document.write('</div>');
-            }
+            themeSwitcher.addSwitcher('theme-switcher');
             </script>
 
             <address id="about" class="vcard body">
@@ -118,8 +199,34 @@
         </footer><!-- /#contentinfo -->
 
         <!-- And finally insert out scripts. -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script>
+            window.jQuery || document.write('<script src="{{SITEURL}}/theme/js/jquery-2.0.3.min.js"><'+'/script>')
+        </script>
         <script type="text/javascript">
-        (function(){var e;e=document.getElementById("theme-switcher-select");e.onchange=function(){var e,t,n,r;n=this.options[this.selectedIndex].value;e=document.getElementById("main-theme");r=e.href.split("/");r[r.length-1]="main-"+n+".css";e.href=r.join("/");return localStorage.setItem("pillbox-theme",n)}}).call(this)
+        $(function() {
+            clickElem = document.createElement('div');
+            clickElem.className = "code-show";
+            clickElem.innerHTML = '<i class="fa fa-plus"></i>';
+            clickElem = $(clickElem).click(function(){
+                e = $(this)
+                e.parent().css("max-height", function(index, value) {
+                    if (value === "none") {
+                        return "400px";
+                    } else {
+                        return "none";
+                    }
+                });
+                e.children().toggleClass('fa-plus').toggleClass('fa-minus');
+            });
+            $('.highlight').prepend(function() {
+                if (this.offsetHeight < this.scrollHeight) {
+                    return clickElem.clone(true);
+                } else {
+                    return null;
+                }
+            });
+        });
         </script>
         {% include 'disqus_comment_counts.html' %}
         {% if PIWIKSCRIPT %}

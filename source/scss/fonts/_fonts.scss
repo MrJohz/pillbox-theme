@@ -1,0 +1,38 @@
+/* * * * * * *
+ * 
+ *   Google fonts
+ * 
+ *   http://www.google.com/fonts#AboutPlace:about
+ *
+ * * * * * * */
+
+@font-face {
+  font-family: 'HeadFont';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Changa One'), local('ChangaOne'), url(http://themes.googleusercontent.com/static/fonts/changaone/v6/QmTOgNNWM9ly3K3B2X29HBsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}
+@font-face {
+  font-family: 'TextFont';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Karla'), local('Karla-Regular'), url(http://themes.googleusercontent.com/static/fonts/karla/v2/azR40LUJrT4HaWK28zHmVA.woff) format('woff');
+}
+@font-face {
+  font-family: 'TextFont';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Karla Bold'), local('Karla-Bold'), url(http://themes.googleusercontent.com/static/fonts/karla/v2/3nZS3BKzlvhkwl4yjCQcjPesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+}
+@font-face {
+  font-family: 'TextFont';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Karla Italic'), local('Karla-Italic'), url(http://themes.googleusercontent.com/static/fonts/karla/v2/oU7KPLtl1UkRu830svIOXw.woff) format('woff');
+}
+@font-face {
+  font-family: 'TextFont';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Karla Bold Italic'), local('Karla-BoldItalic'), url(http://themes.googleusercontent.com/static/fonts/karla/v2/VZ08RdiotRdV1D0ewK-mxBsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}

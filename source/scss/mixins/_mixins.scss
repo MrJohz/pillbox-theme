@@ -1,0 +1,107 @@
+@mixin border-radius($radius) {
+    background-clip: padding-box;
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+         -o-border-radius: $radius;
+            border-radius: $radius;
+}
+
+@mixin border-bottom-right-radius($radius) {
+    background-clip: padding-box;
+    -webkit-border-bottom-right-radius: $radius;
+       -moz-border-bottom-right-radius: $radius;
+        -ms-border-bottom-right-radius: $radius;
+         -o-border-bottom-right-radius: $radius;
+            border-bottom-right-radius: $radius;
+}
+
+@mixin border-top-right-radius($radius) {
+    background-clip: padding-box;
+    -webkit-border-top-right-radius: $radius;
+       -moz-border-top-right-radius: $radius;
+        -ms-border-top-right-radius: $radius;
+         -o-border-top-right-radius: $radius;
+            border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-left-radius($radius) {
+    background-clip: padding-box;
+    -webkit-border-bottom-left-radius: $radius;
+       -moz-border-bottom-left-radius: $radius;
+        -ms-border-bottom-left-radius: $radius;
+         -o-border-bottom-left-radius: $radius;
+            border-bottom-left-radius: $radius;
+}
+
+@mixin border-top-left-radius($radius) {
+    background-clip: padding-box;
+    -webkit-border-top-left-radius: $radius;
+       -moz-border-top-left-radius: $radius;
+        -ms-border-top-left-radius: $radius;
+         -o-border-top-left-radius: $radius;
+            border-top-left-radius: $radius;
+}
+
+@mixin border-top-radius($radius) {
+    @include border-top-right-radius($radius);
+    @include border-top-left-radius($radius);
+}
+
+@mixin border-bottom-radius($radius) {
+    @include border-bottom-right-radius($radius);
+    @include border-bottom-left-radius($radius);
+}
+
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: ".";
+        display: table;
+        visibility: hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin center($width) {
+    width: $width;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin roundlink($color, $bg-color) {
+    color: $color;
+    font-weight: bolder;
+    text-decoration: none;
+
+    &:visited {
+        color: $color;
+        font-weight: bolder;
+        text-decoration: none;
+    }
+
+    &:hover {
+        @include border-radius(5px);
+        background-color: $color;
+        color: $bg-color;
+    }
+}
+
+@mixin bubble($color1, $color2) {
+    @include center(40%);
+    @include border-radius(50px);
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 25px 35px 25px 35px;
+    text-align: center;
+    color: $color2;
+    background-color: $color1;
+
+
+    a {
+        @include roundlink($color2, $color1);
+    }
+}

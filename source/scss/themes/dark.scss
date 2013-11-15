@@ -1,0 +1,10 @@
+$logo: url(/images/johz_fav.png);
+$main-color: #3F8FD2;
+$second-color: #AFC4F9;
+$third-color: #BDD7DF;
+$complement-color: #FFD03F;
+$bg-color: #333333;
+$text-color: $bg-color;
+$text-color2: $second-color;
+
+@import 'pygments/monokai';
