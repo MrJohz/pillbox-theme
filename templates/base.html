@@ -3,120 +3,37 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     {% block head %}
-    <script type="text/javascript">
-        window.themeSwitcher = new (function(themes, defaultTheme) {
-  indexOf = function(e,t,n){if(Array.prototype.indexOf){return Array.prototype.indexOf.apply(e,Array.prototype.slice.call(arguments,1))}var r,i=n?n:0,s;s=e.length;if(s===0||i>=s){return-1}if(i<0){i=s-Math.abs(i)}for(r=i;r<s;r++){if(e[r]==t){return r}}return-1}
 
-  this.lsExists = false;
+    {% if NO_THEME_SWITCHER %}
+        <link id="main-theme" href="{{SITEURL}}/{{THEME_STATIC_DIR}}/css/dark.min.css" rel="stylesheet" />
+    {% else %}
+        <script type="text/javascript">
+        {% if PILLBOX_THEMES %}
+        themes = [
+            {% for t in PILLBOX_THEMES %}
+            '{{t}}',
+            {% endfor %}
+        ];
+            {% if PILLBOX_THEME_DEFAULT %}
+            themeDefault = {{PILLBOX_THEME_DEFAULT}};
+            {% else %}
+            themeDefault = themes[0];
+            {% endif %}
+        {% else %}
+        themes = ['light', 'dark'];
+        themeDefault = 'dark';
+        {% endif %}
+        </script>
 
-  this.themes = themes;
-  this.defaultTheme = indexOf(themes, defaultTheme);
-  this.currentTheme = this.defaultTheme;
+        <script type="text/javascript">
+            window.themeSwitcher=new function(e,t){indexOf=function(e,t,n){if(Array.prototype.indexOf){return Array.prototype.indexOf.apply(e,Array.prototype.slice.call(arguments,1))}var r,i=n?n:0,s;s=e.length;if(s===0||i>=s){return-1}if(i<0){i=s-Math.abs(i)}for(r=i;r<s;r++){if(e[r]==t){return r}}return-1};this.lsExists=false;this.themes=e;this.defaultTheme=indexOf(e,t);this.currentTheme=this.defaultTheme;try{localStorage.setItem("test","test");localStorage.removeItem("test");this.lsExists=true;stylesheet=localStorage.getItem("pillbox-theme");this.currentTheme=indexOf(e,stylesheet);if(this.currentTheme<0){this.currentTheme=this.defaultTheme}this._setStyle=function(e){if(e>=0&&e<this.themes.length){var t=this.themes[e]}else{var t=this.themes[this.currentTheme];e=this.currentTheme}var n=document.getElementById("main-theme");var r=n.href.split("/");r[r.length-1]=t+".min.css";n.href=r.join("/");console.log(n.href);localStorage.setItem("pillbox-theme",t);this.currentTheme=e}}catch(n){this.lsExists=false;this._setStyle=function(e){var t=this.themes[this.currentTheme];var n=document.getElementById("main-theme");var r=n.href.split("/");r[r.length-1]=t+".css";n.href=r.join("/")}}this.writeStyle=function(){var e=this.themes[this.currentTheme];document.write('<link id="main-theme" href="{{SITEURL}}/{{THEME_STATIC_DIR}}/css/');document.write(e+'.css" rel="stylesheet" />')};this.getStyle=function(e){if(e===null||typeof e=="undefined"){return this.currentTheme}else if(typeof e==="number"&&e===Math.floor(e)){if(e>=0&&e<this.themes.length){return e}else{return this.currentTheme}}else{var t=indexOf(this.themes,e);if(t>-1){return t}else{return this.currentTheme}}};this.setStyle=function(e){var t=this.getStyle(e);if(t===this.currentTheme){t=(this.currentTheme+1)%this.themes.length}this._setStyle(t)};this.addSwitcher=function(e){elem=document.getElementById(e);switcher=document.createElement("select");switcher.id="theme-switcher-select";for(var t=0;t<this.themes.length;t++){var n=this.themes[t];var r=document.createElement("option");r.value=n;r.appendChild(document.createTextNode(n));if(t==this.currentTheme){r.selected=true}switcher.appendChild(r)}switcher.onchange=function(){var e=this.options[this.selectedIndex].value;themeSwitcher.setStyle(e)};elem.appendChild(switcher)}}(themes,themeDefault);
 
-  try {
-    localStorage.setItem('test', 'test');
-    localStorage.removeItem('test');
-    this.lsExists = true;
-
-    stylesheet = localStorage.getItem('pillbox-theme');
-    this.currentTheme = indexOf(themes, stylesheet);
-
-    if (this.currentTheme < 0) {
-      this.currentTheme = this.defaultTheme;
-    }
-
-    this._setStyle = function(index) {
-      if (index >= 0 && index < this.themes.length) {
-        var styleName = this.themes[index];
-      } else {
-        var styleName = this.themes[this.currentTheme];
-        index = this.currentTheme;
-      }
-
-      var link = document.getElementById('main-theme');
-      var splits = link.href.split('/');
-      splits[splits.length - 1] = styleName + '.min.css';
-      link.href = splits.join('/')
-      console.log(link.href)
-
-      localStorage.setItem('pillbox-theme', styleName);
-      this.currentTheme = index;
-    }
-
-  } catch(e) {
-    this.lsExists = false;
-
-    this._setStyle = function(index) {
-      var styleName = this.themes[this.currentTheme];
-      var link = document.getElementById('main-theme');
-      var splits = link.href.split('/');
-      splits[splits.length - 1] = styleName + '.css';
-      link.href = splits.join('/');
-    }
-  }
-
-  this.writeStyle = function() {
-    var styleName = this.themes[this.currentTheme];
-    document.write('<link id="main-theme" href="{{SITEURL}}/theme/css/');
-    document.write(styleName + '.css" rel="stylesheet" />');
-  }
-
-  this.getStyle = function(stylesheet) {
-    if (stylesheet === null || typeof stylesheet == "undefined") {
-      return this.currentTheme;
-    } else if (typeof stylesheet === "number"
-                 &&   stylesheet === Math.floor(stylesheet)) {
-      if (stylesheet >= 0 && stylesheet < this.themes.length) {
-        return stylesheet;
-      } else {
-        return this.currentTheme;
-      }
-    } else {
-      var index = indexOf(this.themes, stylesheet);
-      if (index > -1) {
-        return index;
-      } else {
-        return this.currentTheme;
-      }
-    }
-  }
-
-  this.setStyle = function(stylesheet) {
-    var index = this.getStyle(stylesheet);
-    if (index === this.currentTheme) {
-      index = (this.currentTheme + 1) % this.themes.length;
-    }
-    this._setStyle(index);
-  }
-
-  this.addSwitcher = function(elementID) {
-    elem = document.getElementById(elementID);
-    switcher = document.createElement('select');
-    switcher.id = "theme-switcher-select";
-    for (var i = 0; i < this.themes.length; i++) {
-      var theme = this.themes[i];
-      var option = document.createElement('option');
-      option.value = theme;
-      option.appendChild(document.createTextNode(theme));
-      if (i == this.currentTheme) {
-        option.selected = true;
-      }
-      switcher.appendChild(option);
-    };
-    switcher.onchange = function(){
-      var e = this.options[this.selectedIndex].value;
-      themeSwitcher.setStyle(e);
-    };
-    elem.appendChild(switcher);
-  }
-
-})(['light', 'dark'], 'dark');
-
-        themeSwitcher.writeStyle();
-    </script>
-    <noscript>
-        <link id="main-theme" href="{{SITEURL}}/theme/css/main-dark.css" rel="stylesheet" /> 
-    </noscript>
+            themeSwitcher.writeStyle();
+        </script>
+        <noscript>
+            <link id="main-theme" href="{{SITEURL}}/{{THEME_STATIC_DIR}}/css/dark.min.css" rel="stylesheet" /> 
+        </noscript>
+    {% endif %}
 
     <!-- FontAwesome -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet">
@@ -158,22 +75,24 @@
         </header><!-- /#banner -->
 
         <!-- Just copied straight from !simple/base.html again -->
-        <nav id="menu"><ul>
-        {% for title, link in MENUITEMS %}
-            <li><a href="{{ link }}">{{ title }}</a></li>
-        {% endfor %}
-        {% if DISPLAY_PAGES_ON_MENU %}
-          {% for p in PAGES %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
-          {% endfor %}
-        {% else %}
-          {% if DISPLAY_CATEGORIES_ON_MENU %}
-            {% for cat, null in categories %}
-              <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+        {% if MENUITEMS or (DISPLAY_PAGES_ON_MENU and PAGES) or (DISPLAY_CATEGORIES_ON_MENU and categories) %}
+            <nav id="menu"><ul>
+            {% for title, link in MENUITEMS %}
+                <li><a href="{{ link }}">{{ title }}</a></li>
             {% endfor %}
-          {% endif %}
+            {% if DISPLAY_PAGES_ON_MENU %}
+              {% for p in PAGES %}
+                <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              {% if DISPLAY_CATEGORIES_ON_MENU %}
+                {% for cat, null in categories %}
+                  <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+                {% endfor %}
+              {% endif %}
+            {% endif %}
+            </ul></nav><!-- /#menu -->
         {% endif %}
-        </ul></nav><!-- /#menu -->
 
         <!-- Now begineth the content -->
         {% block content %}
@@ -182,7 +101,7 @@
 
 
         <footer id="contentinfo" class="body">
-
+        {% if not NO_THEME_SWITCHER %}
             <div id="theme-switcher">
             Change Theme<br />
             </div>
@@ -190,6 +109,7 @@
             <script>
             themeSwitcher.addSwitcher('theme-switcher');
             </script>
+        {% endif %}
 
             <address id="about" class="vcard body">
             This blog is built from <a href="http://getpelican.com/">Pelican</a>,
@@ -201,7 +121,7 @@
         <!-- And finally insert out scripts. -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script>
-            window.jQuery || document.write('<script src="{{SITEURL}}/theme/js/jquery-2.0.3.min.js"><'+'/script>')
+            window.jQuery || document.write('<script src="{{SITEURL}}/{{THEME_STATIC_DIR}}/js/jquery-2.0.3.min.js"><'+'/script>')
         </script>
         <script type="text/javascript">
         $(function() {

@@ -89,7 +89,7 @@ a {
     @include center(70%);
 
     display: block;
-    margin-top: auto; margin-bottom: auto;
+    margin-top: auto; margin-bottom: 15px;
     padding-top: 20px; padding-bottom: 25px;
     font-family: 'HeadFont', cursive;
     font-size: 7.5em;
@@ -125,6 +125,7 @@ a {
 
 #menu {
     @include bubble($complement-color, $text-color);
+    margin-top: 0;
 
     ul {
         list-style-type: none;

@@ -326,7 +326,7 @@ ol, ul {
   margin-right: auto;
   display: block;
   margin-top: auto;
-  margin-bottom: auto;
+  margin-bottom: 15px;
   padding-top: 20px;
   padding-bottom: 25px;
   font-family: 'HeadFont', cursive;
@@ -385,7 +385,8 @@ ol, ul {
     padding: 25px 35px 25px 35px;
     text-align: center;
     color: #333333;
-    background-color: #C7D7D7; }
+    background-color: #C7D7D7;
+    margin-top: 0; }
     #menu ul {
       list-style-type: none;
       margin: 0;
