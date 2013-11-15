@@ -183,7 +183,7 @@ a {
         text-align: center;
 
         a {
-            @include roundlink($text-color, $bg-color);
+            @include roundlink($text-color2, $bg-color);
         }
     }
 
