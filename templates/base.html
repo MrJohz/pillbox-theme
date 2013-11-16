@@ -41,6 +41,9 @@
     <!-- Add title -->
     <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
 
+    <!-- Metas, viewports and descriptions, oh my! -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Crazy feed mumbo-jumbo, kept the same from !simple/base.html -->
     {% if FEED_ALL_ATOM %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
@@ -107,6 +110,7 @@
             </div>
 
             <script>
+            document.getElementById('theme-switcher').style.display = "block";
             themeSwitcher.addSwitcher('theme-switcher');
             </script>
         {% endif %}
@@ -119,38 +123,40 @@
         </footer><!-- /#contentinfo -->
 
         <!-- And finally insert out scripts. -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script>
-            window.jQuery || document.write('<script src="{{SITEURL}}/{{THEME_STATIC_DIR}}/js/jquery-2.0.3.min.js"><'+'/script>')
-        </script>
-        <script type="text/javascript">
-        $(function() {
-            clickElem = document.createElement('div');
-            clickElem.className = "code-show";
-            clickElem.innerHTML = '<i class="fa fa-plus"></i>';
-            clickElem = $(clickElem).click(function(){
-                e = $(this)
-                e.parent().css("max-height", function(index, value) {
-                    if (value === "none") {
-                        return "400px";
+        <div id="scripts">
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            <script>
+                window.jQuery || document.write('<script src="{{SITEURL}}/{{THEME_STATIC_DIR}}/js/jquery-2.0.3.min.js"><'+'/script>')
+            </script>
+            <script type="text/javascript">
+            $(function() {
+                clickElem = document.createElement('div');
+                clickElem.className = "code-show";
+                clickElem.innerHTML = '<i class="fa fa-plus"></i>';
+                clickElem = $(clickElem).click(function(){
+                    e = $(this)
+                    e.parent().css("max-height", function(index, value) {
+                        if (value === "none") {
+                            return "400px";
+                        } else {
+                            return "none";
+                        }
+                    });
+                    e.children().toggleClass('fa-plus').toggleClass('fa-minus');
+                });
+                $('.highlight').prepend(function() {
+                    if (this.offsetHeight < this.scrollHeight) {
+                        return clickElem.clone(true);
                     } else {
-                        return "none";
+                        return null;
                     }
                 });
-                e.children().toggleClass('fa-plus').toggleClass('fa-minus');
             });
-            $('.highlight').prepend(function() {
-                if (this.offsetHeight < this.scrollHeight) {
-                    return clickElem.clone(true);
-                } else {
-                    return null;
-                }
-            });
-        });
-        </script>
-        {% include 'disqus_comment_counts.html' %}
-        {% if PIWIKSCRIPT %}
-            {{ PIWIKSCRIPT }}
-        {% endif %}
+            </script>
+            {% include 'disqus_comment_counts.html' %}
+            {% if PIWIKSCRIPT %}
+                {{ PIWIKSCRIPT }}
+            {% endif %}
+        </div>
     </body>
 </html>

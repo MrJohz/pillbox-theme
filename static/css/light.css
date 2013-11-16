@@ -320,24 +320,15 @@ ol, ul {
   -ms-border-bottom-left-radius: 40px;
   -o-border-bottom-left-radius: 40px;
   border-bottom-left-radius: 40px;
-  width: 70%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
   display: block;
   margin-top: auto;
   margin-bottom: 15px;
   padding-top: 20px;
   padding-bottom: 25px;
   font-family: 'HeadFont', cursive;
-  font-size: 7.5em;
   letter-spacing: 2px;
-  background-color: #ACD6EE;
-  background-repeat: no-repeat;
-  background-image: url(/images/johz_fav.png);
-  background-position: 90% 50%;
-  background-size: auto 80%;
-  text-align: center; }
+  text-align: center;
+  background-color: #ACD6EE; }
   #header a {
     color: #333333;
     text-decoration: none; }
@@ -424,10 +415,6 @@ ol, ul {
       height: 10px; }
 
       #content {
-        width: 70%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
         background-clip: padding-box;
         -webkit-border-radius: 40px;
         -moz-border-radius: 40px;
@@ -459,10 +446,6 @@ ol, ul {
               background-color: #333333;
               height: 8px; }
               #content .post-info, #content .paginator {
-                width: 40%;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
                 background-clip: padding-box;
                 -webkit-border-radius: 20px;
                 -moz-border-radius: 20px;
@@ -557,7 +540,8 @@ ol, ul {
       font-weight: bolder;
       text-decoration: none; }
       #contentinfo #theme-switcher {
-        margin: 15px; }
+        margin: 15px;
+        display: none; }
         #contentinfo #theme-switcher-select {
           background-clip: padding-box;
           -webkit-border-radius: 5px;
@@ -571,6 +555,9 @@ ol, ul {
           font-size: 1.3em;
           font-family: 'TextFont', sans-serif;
           background-color: #ACD6EE; }
+
+#scripts {
+  display: none; }
 a:visited {
   color: #333333;
   font-weight: bolder;
@@ -687,4 +674,160 @@ a:visited {
       border-radius: 5px;
       background-color: #333333;
       color: #ACD6EE; }
+@media only screen and (max-width: 639px) {
+  .highlight {
+    margin-left: 0;
+    margin-right: 0;   }
+}
+  @media only screen and (min-width: 1020px) {
+    #header {
+      width: 70%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;   }
+}
+    @media only screen and (max-width: 1019px) and (min-width: 840px) {
+      #header {
+        width: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;   }
+}
+      @media only screen and (max-width: 839px) and (min-width: 640px) {
+        #header {
+          width: 80%;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;   }
+}
+        @media only screen and (max-width: 639px) {
+          #header {
+            width: 90%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;   }
+}
+          @media only screen and (min-width: 1020px) {
+            #header {
+              font-size: 7.5em;   }
+}
+            @media only screen and (max-width: 1019px) and (min-width: 840px) {
+              #header {
+                font-size: 7.5em;   }
+}
+              @media only screen and (max-width: 839px) and (min-width: 640px) {
+                #header {
+                  font-size: 7.5em;   }
+}
+                @media only screen and (max-width: 639px) {
+                  #header {
+                    font-size: 6em;   }
+}
+                  @media only screen and (min-width: 1020px) {
+                    #header {
+                      background-repeat: no-repeat;
+                      background-image: url(/images/johz_fav.png);
+                      background-position: 90% 50%;
+                      background-size: auto 80%;   }
+}
+                    @media only screen and (max-width: 1019px) and (min-width: 840px) {
+                      #header {
+                        background-repeat: no-repeat;
+                        background-image: url(/images/johz_fav.png);
+                        background-position: 90% 50%;
+                        background-size: auto 80%;   }
+}
+                      @media only screen and (max-width: 639px) {
+                        #quote {
+                          display: none;   }
+}
+                        @media only screen and (max-width: 639px) {
+                          #menu {
+                            padding-top: 10px;
+                            padding-bottom: 10px;   }
+}
+                          @media only screen and (min-width: 1020px) {
+                            #content {
+                              width: 70%;
+                              display: block;
+                              margin-left: auto;
+                              margin-right: auto;   }
+}
+                            @media only screen and (max-width: 1019px) and (min-width: 840px) {
+                              #content {
+                                width: 80%;
+                                display: block;
+                                margin-left: auto;
+                                margin-right: auto;   }
+}
+                              @media only screen and (max-width: 839px) and (min-width: 640px) {
+                                #content {
+                                  width: 80%;
+                                  display: block;
+                                  margin-left: auto;
+                                  margin-right: auto;   }
+}
+                                @media only screen and (max-width: 639px) {
+                                  #content {
+                                    width: 90%;
+                                    display: block;
+                                    margin-left: auto;
+                                    margin-right: auto;   }
+}
+                                  @media only screen and (min-width: 1020px) {
+                                    #content .post-info, #content .paginator {
+                                      width: 40%;
+                                      display: block;
+                                      margin-left: auto;
+                                      margin-right: auto;   }
+}
+                                    @media only screen and (max-width: 1019px) and (min-width: 840px) {
+                                      #content .post-info, #content .paginator {
+                                        width: 50%;
+                                        display: block;
+                                        margin-left: auto;
+                                        margin-right: auto;   }
+}
+                                      @media only screen and (max-width: 839px) and (min-width: 640px) {
+                                        #content .post-info, #content .paginator {
+                                          width: 60%;
+                                          display: block;
+                                          margin-left: auto;
+                                          margin-right: auto;   }
+}
+                                        @media only screen and (max-width: 639px) {
+                                          #content .post-info, #content .paginator {
+                                            width: 80%;
+                                            display: block;
+                                            margin-left: auto;
+                                            margin-right: auto;   }
+}
+@media only screen and (min-width: 1020px) {
+  #contentinfo {
+    width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;   }
+}
+  @media only screen and (max-width: 1019px) and (min-width: 840px) {
+    #contentinfo {
+      width: 80%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;   }
+}
+    @media only screen and (max-width: 839px) and (min-width: 640px) {
+      #contentinfo {
+        width: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;   }
+}
+      @media only screen and (max-width: 639px) {
+        #contentinfo {
+          width: 90%;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;   }
+}
 

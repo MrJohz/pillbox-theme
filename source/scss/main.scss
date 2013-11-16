@@ -54,6 +54,9 @@ a {
 .highlight {
     @include border-radius(5px);
     @include center(90%);
+    @include breakpoint(small) {
+        margin-left: 0; margin-right: 0;
+    };
     position: relative;
     overflow: auto;
     max-height: 400px;
@@ -85,21 +88,34 @@ a {
 }
 
 #header {
+    @include breakpoint(big) {
+        @include center(70%);
+    }; @include breakpoint(mbig, msmall) {
+        @include center(80%);
+    }; @include breakpoint(small) {
+        @include center(90%);
+    };
     @include border-bottom-radius(40px);
-    @include center(70%);
 
     display: block;
     margin-top: auto; margin-bottom: 15px;
     padding-top: 20px; padding-bottom: 25px;
     font-family: 'HeadFont', cursive;
-    font-size: 7.5em;
+    @include breakpoint(big, mbig, msmall) {
+        font-size: 7.5em;
+    };
+    @include breakpoint(small) {
+        font-size: 6.0em;
+    };
     letter-spacing: 2px;
-    background-color: $main-color;
-    background-repeat: no-repeat;
-    background-image: $logo;
-    background-position: 90% 50%;
-    background-size: auto 80%;
     text-align: center;
+    background-color: $main-color;
+    @include breakpoint(big, mbig) {
+        background-repeat: no-repeat;
+        background-image: $logo;
+        background-position: 90% 50%;
+        background-size: auto 80%;
+    };
 
     a {
         color: $text-color;
@@ -120,11 +136,18 @@ a {
 }
 
 #quote {
+    @include breakpoint(small) {
+        display: none; // It's just too much space on a small screen. :(
+    }
     @include bubble($complement-color, $text-color);
 }
 
 #menu {
     @include bubble($complement-color, $text-color);
+    @include breakpoint(small) {
+        padding-top: 10px;
+        padding-bottom: 10px; 
+    }
     margin-top: 0;
 
     ul {
@@ -151,7 +174,13 @@ a {
 }
 
 #content {
-    @include center(70%);
+    @include breakpoint(big) {
+        @include center(70%);
+    }; @include breakpoint(mbig, msmall) {
+        @include center(80%);
+    }; @include breakpoint(small) {
+        @include center(90%);
+    };
     @include border-radius(40px);
     background-color: $second-color;
     padding: 25px 0px;
@@ -176,7 +205,15 @@ a {
     }
 
     .post-info {
-        @include center(40%);
+        @include breakpoint(big) {
+            @include center(40%);
+        }; @include breakpoint(mbig) {
+            @include center(50%);
+        }; @include breakpoint(msmall) {
+            @include center(60%);
+        }; @include breakpoint(small) {
+            @include center(80%);
+        };
         @include border-radius(20px);
         background-color: $bg-color;
         color: $text-color2;
@@ -242,7 +279,15 @@ a {
 }
 
 #contentinfo {
+    @include breakpoint(big) {
+        @include center(70%);
+    }; @include breakpoint(mbig, msmall) {
+        @include center(80%);
+    }; @include breakpoint(small) {
+        @include center(90%);
+    };
     @include border-top-radius(30px);
+
     @include center(70%);
     margin-top: 25px;
     padding: 25px 0px;
@@ -256,6 +301,7 @@ a {
 
     #theme-switcher {
         margin: 15px;
+        display: none;
     }
 
     #theme-switcher-select {
@@ -267,4 +313,10 @@ a {
         font-family: 'TextFont', sans-serif;
         background-color: $main-color;
     }
+}
+
+#scripts {
+    // HACK - piwik adds a <p> block element in noscript mode for tracking
+    //        purposes, this just ensures it doesn't get in the way
+    display:none;
 }

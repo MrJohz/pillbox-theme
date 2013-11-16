@@ -1,0 +1,5 @@
+Change log:
+
+2013-11--16
+    - Ensure site works in noscript mode
+    - Add responsivity
